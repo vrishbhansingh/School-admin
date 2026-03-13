@@ -1,0 +1,67 @@
+[12-Jul-2025 18:06:02 UTC] PHP Fatal error:  Trait "App\Http\Controllers\Admin\Illuminate\Support\Facades\DB" not found in /home/k8m6bcwjfjhl/public_html/school/app/Http/Controllers/Admin/StudentController.php on line 18
+[12-Jul-2025 18:06:32 UTC] PHP Fatal error:  Trait "App\Http\Controllers\Admin\Illuminate\Support\Facades\DB" not found in /home/k8m6bcwjfjhl/public_html/school/app/Http/Controllers/Admin/StudentController.php on line 18
+[13-Jul-2025 12:43:40 UTC] PHP Fatal error:  Cannot redeclare App\Http\Controllers\Admin\Account::account_setting() in /home/k8m6bcwjfjhl/public_html/school/app/Http/Controllers/Admin/Account.php on line 51
+[13-Jul-2025 20:14:39 UTC] PHP Fatal error:  Trait "App\Http\Controllers\Admin\Illuminate\Http\Request" not found in /home/k8m6bcwjfjhl/public_html/school/app/Http/Controllers/Admin/Master.php on line 19
+[13-Jul-2025 20:16:15 UTC] PHP Fatal error:  Trait "App\Http\Controllers\Admin\Illuminate\Http\Request" not found in /home/k8m6bcwjfjhl/public_html/school/app/Http/Controllers/Admin/Master.php on line 19
+[19-Jul-2025 20:51:23 UTC] PHP Fatal error:  Uncaught Error: Unknown named parameter $admin_routes in /home/k8m6bcwjfjhl/public_html/school/bootstrap/app.php:11
+Stack trace:
+#0 /home/k8m6bcwjfjhl/public_html/school/public/index.php(10): require_once()
+#1 /home/k8m6bcwjfjhl/public_html/school/index.php(20): require_once('/home/k8m6bcwjf...')
+#2 {main}
+  thrown in /home/k8m6bcwjfjhl/public_html/school/bootstrap/app.php on line 11
+[19-Jul-2025 20:51:37 UTC] PHP Fatal error:  Uncaught Error: Unknown named parameter $admin_routes in /home/k8m6bcwjfjhl/public_html/school/bootstrap/app.php:11
+Stack trace:
+#0 /home/k8m6bcwjfjhl/public_html/school/public/index.php(10): require_once()
+#1 /home/k8m6bcwjfjhl/public_html/school/index.php(20): require_once('/home/k8m6bcwjf...')
+#2 {main}
+  thrown in /home/k8m6bcwjfjhl/public_html/school/bootstrap/app.php on line 11
+[19-Jul-2025 20:51:43 UTC] PHP Fatal error:  Uncaught Error: Unknown named parameter $admin_routes in /home/k8m6bcwjfjhl/public_html/school/bootstrap/app.php:11
+Stack trace:
+#0 /home/k8m6bcwjfjhl/public_html/school/public/index.php(10): require_once()
+#1 /home/k8m6bcwjfjhl/public_html/school/index.php(20): require_once('/home/k8m6bcwjf...')
+#2 {main}
+  thrown in /home/k8m6bcwjfjhl/public_html/school/bootstrap/app.php on line 11
+[19-Jul-2025 20:51:56 UTC] PHP Fatal error:  Uncaught Error: Unknown named parameter $admin in /home/k8m6bcwjfjhl/public_html/school/bootstrap/app.php:11
+Stack trace:
+#0 /home/k8m6bcwjfjhl/public_html/school/public/index.php(10): require_once()
+#1 /home/k8m6bcwjfjhl/public_html/school/index.php(20): require_once('/home/k8m6bcwjf...')
+#2 {main}
+  thrown in /home/k8m6bcwjfjhl/public_html/school/bootstrap/app.php on line 11
+[19-Jul-2025 21:15:01 UTC] PHP Fatal error:  Uncaught Error: Unknown named parameter $admin_routes in /home/k8m6bcwjfjhl/public_html/school/bootstrap/app.php:13
+Stack trace:
+#0 /home/k8m6bcwjfjhl/public_html/school/public/index.php(10): require_once()
+#1 /home/k8m6bcwjfjhl/public_html/school/index.php(20): require_once('/home/k8m6bcwjf...')
+#2 {main}
+  thrown in /home/k8m6bcwjfjhl/public_html/school/bootstrap/app.php on line 13
+[19-Jul-2025 21:15:11 UTC] PHP Fatal error:  Uncaught Error: Unknown named parameter $admin_routes in /home/k8m6bcwjfjhl/public_html/school/bootstrap/app.php:13
+Stack trace:
+#0 /home/k8m6bcwjfjhl/public_html/school/public/index.php(10): require_once()
+#1 /home/k8m6bcwjfjhl/public_html/school/index.php(20): require_once('/home/k8m6bcwjf...')
+#2 {main}
+  thrown in /home/k8m6bcwjfjhl/public_html/school/bootstrap/app.php on line 13
+[25-Jul-2025 21:19:00 UTC] PHP Fatal error:  Cannot redeclare App\Http\Controllers\Admin\FeeController::get_student_fee_list() in /home/k8m6bcwjfjhl/public_html/school/app/Http/Controllers/Admin/FeeController.php on line 553
+[30-Sep-2025 20:20:30 UTC] PHP Parse error:  syntax error, unexpected token "<", expecting end of file in /home/k8m6bcwjfjhl/public_html/school/bootstrap/app.php on line 3
+[30-Sep-2025 20:20:33 UTC] PHP Parse error:  syntax error, unexpected token "<", expecting end of file in /home/k8m6bcwjfjhl/public_html/school/bootstrap/app.php on line 3
+[30-Sep-2025 20:20:39 UTC] PHP Parse error:  syntax error, unexpected token "<", expecting end of file in /home/k8m6bcwjfjhl/public_html/school/bootstrap/app.php on line 3
+[30-Sep-2025 20:20:40 UTC] PHP Parse error:  syntax error, unexpected token "<", expecting end of file in /home/k8m6bcwjfjhl/public_html/school/bootstrap/app.php on line 3
+[30-Sep-2025 20:20:55 UTC] PHP Parse error:  syntax error, unexpected token "<", expecting end of file in /home/k8m6bcwjfjhl/public_html/school/bootstrap/app.php on line 3
+[30-Sep-2025 21:36:39 UTC] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/k8m6bcwjfjhl/public_html/school/vendor/dompdf/dompdf/src/Dompdf.php on line 549
+[30-Sep-2025 21:37:22 UTC] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/k8m6bcwjfjhl/public_html/school/vendor/dompdf/dompdf/src/Dompdf.php on line 549
+[30-Sep-2025 21:37:57 UTC] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/k8m6bcwjfjhl/public_html/school/vendor/dompdf/dompdf/src/Dompdf.php on line 549
+[30-Sep-2025 21:45:39 UTC] PHP Fatal error:  Maximum execution time of 120 seconds exceeded in /home/k8m6bcwjfjhl/public_html/school/vendor/dompdf/dompdf/src/Dompdf.php on line 549
+[30-Sep-2025 21:46:29 UTC] PHP Fatal error:  Maximum execution time of 120 seconds exceeded in /home/k8m6bcwjfjhl/public_html/school/vendor/dompdf/dompdf/src/Dompdf.php on line 549
+[30-Sep-2025 21:52:53 UTC] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 4096 bytes) in /home/k8m6bcwjfjhl/public_html/school/vendor/composer/pcre/src/Preg.php on line 33
+[30-Sep-2025 21:54:57 UTC] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 4096 bytes) in /home/k8m6bcwjfjhl/public_html/school/vendor/phpoffice/phpspreadsheet/src/PhpSpreadsheet/Cell/Cell.php on line 125
+[30-Sep-2025 21:55:38 UTC] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 4096 bytes) in /home/k8m6bcwjfjhl/public_html/school/vendor/phpoffice/phpspreadsheet/src/PhpSpreadsheet/Reader/Html.php on line 330
+[02-Oct-2025 05:43:27 UTC] PHP Fatal error:  Cannot use App\Models\SchoolSession as SchoolSession because the name is already in use in /home/k8m6bcwjfjhl/public_html/school/app/Http/Controllers/Admin/Exam.php on line 13
+[02-Oct-2025 06:00:31 UTC] PHP Fatal error:  Allowed memory size of 536870912 bytes exhausted (tried to allocate 4096 bytes) in /home/k8m6bcwjfjhl/public_html/school/vendor/phpoffice/phpspreadsheet/src/PhpSpreadsheet/Cell/Cell.php on line 125
+[02-Oct-2025 06:00:51 UTC] PHP Fatal error:  Allowed memory size of 536870912 bytes exhausted (tried to allocate 4096 bytes) in /home/k8m6bcwjfjhl/public_html/school/vendor/composer/pcre/src/Preg.php on line 33
+[02-Oct-2025 06:00:58 UTC] PHP Fatal error:  Allowed memory size of 536870912 bytes exhausted (tried to allocate 4096 bytes) in /home/k8m6bcwjfjhl/public_html/school/vendor/composer/pcre/src/Preg.php on line 33
+[02-Oct-2025 06:01:08 UTC] PHP Fatal error:  Allowed memory size of 536870912 bytes exhausted (tried to allocate 4096 bytes) in /home/k8m6bcwjfjhl/public_html/school/vendor/composer/pcre/src/Preg.php on line 33
+[02-Oct-2025 06:01:37 UTC] PHP Fatal error:  Allowed memory size of 536870912 bytes exhausted (tried to allocate 4096 bytes) in /home/k8m6bcwjfjhl/public_html/school/vendor/composer/pcre/src/Preg.php on line 33
+[02-Oct-2025 06:01:51 UTC] PHP Fatal error:  Allowed memory size of 536870912 bytes exhausted (tried to allocate 4096 bytes) in /home/k8m6bcwjfjhl/public_html/school/vendor/composer/pcre/src/Preg.php on line 33
+[02-Oct-2025 06:02:07 UTC] PHP Fatal error:  Allowed memory size of 536870912 bytes exhausted (tried to allocate 4096 bytes) in /home/k8m6bcwjfjhl/public_html/school/vendor/composer/pcre/src/Preg.php on line 33
+[02-Oct-2025 06:02:12 UTC] PHP Fatal error:  Allowed memory size of 536870912 bytes exhausted (tried to allocate 4096 bytes) in /home/k8m6bcwjfjhl/public_html/school/vendor/composer/pcre/src/Preg.php on line 33
+[03-Oct-2025 18:18:40 UTC] PHP Fatal error:  Cannot redeclare App\Http\Controllers\Admin\Exam::get_exam_classes() in /home/k8m6bcwjfjhl/public_html/school/app/Http/Controllers/Admin/Exam.php on line 662
+[05-Oct-2025 20:53:18 UTC] PHP Fatal error:  Cannot redeclare App\Http\Controllers\Admin\Exam::get_student_data() in /home/k8m6bcwjfjhl/public_html/school/app/Http/Controllers/Admin/Exam.php on line 1043
+[29-Oct-2025 15:17:56 UTC] PHP Fatal error:  Allowed memory size of 536870912 bytes exhausted (tried to allocate 4096 bytes) in /home/k8m6bcwjfjhl/public_html/school/vendor/phpoffice/phpspreadsheet/src/PhpSpreadsheet/Collection/Cells.php on line 361
