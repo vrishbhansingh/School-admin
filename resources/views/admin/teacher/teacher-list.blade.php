@@ -22,6 +22,8 @@
     <link rel="stylesheet" href="{{ asset('public/admin/css/fullcalendar.min.css') }}">
     <link rel="stylesheet" href="{{ asset('public/admin/css/animate.min.css') }}">
     <link rel="stylesheet" href="{{ asset('public/admin/css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+
 
     <!-- Preloader CSS -->
     <style>
@@ -48,8 +50,54 @@
         }
 
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .teacher-search-box {
+            max-width: 400px;
+        }
+
+        .search-wrapper {
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        #teacher_search {
+            height: 45px;
+            font-size: 14px;
+        }
+
+        .expand-btn {
+            width: 28px;
+            height: 28px;
+            padding: 0;
+            font-weight: bold;
+        }
+
+        .btn-warning {
+            background: linear-gradient(45deg, #ff9d01, #ffb300);
+            border: none;
+            color: #fff;
+            font-weight: 500;
+        }
+
+        .btn-warning:hover {
+            background: linear-gradient(45deg, #ff8c00, #ffa000);
+        }
+
+        .teacher-img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #ddd;
         }
     </style>
 
@@ -67,7 +115,7 @@
         <!-- Page Area Start Here -->
         <div class="dashboard-page-one">
             <!-- Sidebar Area Start Here -->
-           @include('admin.include.sidebar')
+            @include('admin.include.sidebar')
             <!-- Sidebar Area End Here -->
             <div class="dashboard-content-one">
                 <!-- Breadcubs Area Start Here -->
@@ -84,147 +132,64 @@
                 <!-- Teacher Table Area Start Here -->
                 <div class="card height-auto">
                     <div class="card-body">
-                        <div class="heading-layout1">
+                        <div class="heading-layout1 d-flex align-items-center justify-content-between mb-4">
+
                             <div class="item-title">
-                                <h3>All Teachers Data</h3>
+                                <h3 class="mb-0">All Teachers Data</h3>
                             </div>
-                           <div class="dropdown">
-                                <a class="dropdown-toggle" href="#" role="button" 
-                                data-toggle="dropdown" aria-expanded="false">...</a>
-        
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item" href="#"><i class="fas fa-times text-orange-red"></i>Close</a>
-                                    <a class="dropdown-item" href="#"><i class="fas fa-cogs text-dark-pastel-green"></i>Edit</a>
-                                    <a class="dropdown-item" href="#"><i class="fas fa-redo-alt text-orange-peel"></i>Refresh</a>
-                                </div>
-                            </div>
+
+                            <a href="{{ route('admin.add_teacher') }}" class="btn btn-warning btn-lg d-flex align-items-center gap-2">
+
+                                <i class="fas fa-plus"></i>
+                                Add Teacher
+
+                            </a>
+
                         </div>
                         <form class="mg-b-20">
-                            <div class="row gutters-8">
-                                <div class="col-3-xxxl col-xl-3 col-lg-3 col-12 form-group">
-                                    <input type="text" placeholder="Search by ID ..." class="form-control">
+                            <!-- Search Area -->
+                            <div class="row mb-4 d-flex align-items-center justify-content-end">
+
+                                <div class="col-md-4 ms-auto">
+
+                                    <div class="input-group shadow-sm">
+
+                                        <span class="input-group-text bg-white">
+                                            <i class="fas fa-search text-muted"></i>
+                                        </span>
+
+                                        <input
+                                            type="text"
+                                            id="teacher_search"
+                                            class="form-control"
+                                            placeholder="Search teachers...">
+
+                                    </div>
+
                                 </div>
-                                <div class="col-4-xxxl col-xl-4 col-lg-3 col-12 form-group">
-                                    <input type="text" placeholder="Search by Name ..." class="form-control">
-                                </div>
-                                <div class="col-4-xxxl col-xl-3 col-lg-3 col-12 form-group">
-                                    <input type="text" placeholder="Search by Phone ..." class="form-control">
-                                </div>
-                                <div class="col-1-xxxl col-xl-2 col-lg-3 col-12 form-group">
-                                    <button type="submit" class="fw-btn-fill btn-gradient-yellow">SEARCH</button>
-                                </div>
+
                             </div>
                         </form>
                         <div class="table-responsive">
-                            <table class="table table-striped table-bordered text-nowrap">
+                            <table class="table table-bordered">
+
                                 <thead>
                                     <tr>
-                                        <th> 
-                                            <div class="form-check">
-                                                <input type="checkbox" class="form-check-input checkAll">
-                                                <label class="form-check-label">ID</label>
-                                            </div>
-                                        </th>
-                                        <th>Photo</th>
-                                        <th>Name</th>
-                                        <th>Gender</th>
-                                        <th>Class</th>
-                                        <th>Subject</th>
-                                        <th>Section</th>
-                                        <th>Address</th>
-                                        <th>Phone</th>
-                                        <th>E-mail</th>
-                                        <th></th>
+                                        <th class="text-center" style="width:40px;"></th>
+                                        <th class="text-center">Image</th>
+                                        <th class="text-center">ID No</th>
+                                        <th class="text-center">Name</th>
+                                        <th class="text-center">Email</th>
+                                        <th class="text-center">Phone</th>
+                                        <th class="text-center">Gender</th>
+                                        <th class="text-center">Qualification</th>
+                                        <th class="text-center">Action</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <div class="form-check">
-                                                <input type="checkbox" class="form-check-input">
-                                                <label class="form-check-label">#TCR2001</label>
-                                            </div>
-                                        </td>
-                                        <td class="text-center"><img src="{{ asset('public/admin/img/figure/student2.png') }}" alt="student"></td>
-                                        <td><a href="{{ route('admin.teacher_details') }}">Hemant Kumar</a></td>
-                                        <td>Male</td>
-                                        <td>2</td>
-                                        <td>English</td>
-                                        <td>A</td>
-                                        <td>New Delhi</td>
-                                        <td>+91-8099708044</td>
-                                        <td>hemantkumar@gmail.com</td>
-                                         <td>
-                                            <div class="dropdown">
-                                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                                    <span class="flaticon-more-button-of-three-dots"></span>
-                                                </a>
-                                                <div class="dropdown-menu dropdown-menu-right">
-                                                    <a class="dropdown-item" href="#"><i class="fas fa-times text-orange-red"></i>Close</a>
-                                                    <a class="dropdown-item" href="#"><i class="fas fa-cogs text-dark-pastel-green"></i>Edit</a>
-                                                    <a class="dropdown-item" href="#"><i class="fas fa-redo-alt text-orange-peel"></i>Refresh</a>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="form-check">
-                                                <input type="checkbox" class="form-check-input">
-                                                <label class="form-check-label">#TCR2002</label>
-                                            </div>
-                                        </td>
-                                        <td class="text-center"><img src="{{ asset('public/admin/img/figure/student2.png') }}" alt="student"></td>
-                                        <td><a href="{{ route('admin.teacher_details') }}">Shivangi Mishra</a></td>
-                                        <td>Female</td>
-                                        <td>1</td>
-                                        <td>Mathematics</td>
-                                        <td>A</td>
-                                        <td>New Delhi</td>
-                                        <td>+91-8801882233</td>
-                                        <td>shivangimishra@gmail.com</td>
-                                         <td>
-                                            <div class="dropdown">
-                                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                                    <span class="flaticon-more-button-of-three-dots"></span>
-                                                </a>
-                                                <div class="dropdown-menu dropdown-menu-right">
-                                                    <a class="dropdown-item" href="#"><i class="fas fa-times text-orange-red"></i>Close</a>
-                                                    <a class="dropdown-item" href="#"><i class="fas fa-cogs text-dark-pastel-green"></i>Edit</a>
-                                                    <a class="dropdown-item" href="#"><i class="fas fa-redo-alt text-orange-peel"></i>Refresh</a>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="form-check">
-                                                <input type="checkbox" class="form-check-input">
-                                                <label class="form-check-label">#TCR2003</label>
-                                            </div>
-                                        </td>
-                                        <td class="text-center"><img src="{{ asset('public/admin/img/figure/student2.png') }}" alt="student"></td>
-                                        <td><a href="{{ route('admin.teacher_details') }}">Jayant Jadhav</a></td>
-                                        <td>Male</td>
-                                        <td>2</td>
-                                        <td>Mathematics</td>
-                                        <td>A</td>
-                                        <td>New Delhi</td>
-                                        <td>+91-9110302200</td>
-                                        <td>jayantjadhav@gmail.com</td>
-                                         <td>
-                                            <div class="dropdown">
-                                                <a class="dropdown-toggle" href="#" data-toggle="dropdown"><i class="flaticon-more-button-of-three-dots"></i></a>
-                                                <div class="dropdown-menu dropdown-menu-right">
-                                                    <a class="dropdown-item" href="#"><i class="fas fa-times text-danger"></i> Close</a>
-                                                    <a class="dropdown-item" href="#"><i class="fas fa-cogs text-success"></i> Edit</a>
-                                                    <a class="dropdown-item" href="#"><i class="fas fa-redo-alt text-warning"></i> Refresh</a>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    
+                                <tbody id="teacher_table_body">
+
                                 </tbody>
+
                             </table>
                         </div>
                     </div>
@@ -241,15 +206,222 @@
     <script src="{{ asset('public/admin/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('public/admin/js/plugins.js') }}"></script>
     <script src="{{ asset('public/admin/js/jquery.scrollUp.min.js') }}"></script>
-    <script src="{{ asset('public/admin/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('public/admin/js/main.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
 
     <!-- Preloader Hide Script -->
     <script>
-        window.addEventListener('load', function () {
-            document.getElementById('preloader').style.display = 'none';
+        let teachersData = [];
+        const teacherImageBase = "{{ asset('public/uploads/teachers') }}/";
+        const defaultTeacherImage = "{{ asset('public/admin/img/default-user.png') }}";
+        $(document).ready(function() {
+
+            loadTeacherData();
+
+        });
+
+        function loadTeacherData() {
+
+            $("#loader").show();
+
+            $.ajax({
+
+                url: "{{ url('admin/get-teachers-data') }}",
+                type: "GET",
+                dataType: "json",
+
+                success: function(response) {
+                    teachersData = response;
+
+                    renderTeachers(teachersData);
+                    $("#loader").hide();
+
+                    let html = '';
+
+                    $.each(response, function(index, teacher) {
+
+                        html += `
+                        <tr class="main-row">
+                            <td class="text-center">
+                                <button class="expand-btn btn btn-sm btn-primary">+</button>
+                            </td>
+                           <td class="text-center">
+                                <img src="${teacher.profile_image ? '/uploads/teachers/' + teacher.profile_image : '/public/admin/img/default-user.jpg'}" 
+                                class="teacher-img">
+                            </td>
+                            <td class="text-center">${teacher.id_no}</td>
+
+                            <td class="text-center">${teacher.teacher_name}</td>
+                            <td class="text-center">${teacher.email}</td>
+                            <td class="text-center">${teacher.phone}</td>
+                            <td class="text-center">${teacher.gender}</td>
+                            <td class="text-center">${teacher.qualification}</td>
+                            <td class="text-center">
+                                <a href="{{ url('admin/edit-teacher') }}/${teacher.id}" class="btn btn-sm btn-info">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                            </td>
+                        </tr>
+
+                        <tr class="detail-row" style="display:none;">
+                            <td colspan="7">
+                                <div style="padding:15px;background:#f8f9fa;border-radius:6px">
+
+                                <div class="row">
+
+                                <div class="col-md-4">
+                                <strong>Experience:</strong> ${teacher.experience}
+                                </div>
+
+                                <div class="col-md-4">
+                                <strong>Joining Date:</strong> ${teacher.joining_date}
+                                </div>
+
+                                <div class="col-md-4">
+                                <strong>Blood Group:</strong> ${teacher.blood_group}
+                                </div>
+
+                                <div class="col-md-4 mt-2">
+                                <strong>DOB:</strong> ${teacher.dob}
+                                </div>
+
+                                <div class="col-md-8 mt-2">
+                                   <strong>Address:</strong> ${teacher.address}
+                                </div>
+
+                                </div>
+                                </div>
+                            </td>
+                        </tr>
+                        `;
+
+                    });
+
+                    $("#teacher_table_body").html(html);
+
+                },
+
+                error: function(xhr) {
+                    $("#loader").hide();
+                    toastr.error(xhr.responseText);
+
+                }
+
+            });
+
+        }
+
+        $(document).on("click", ".expand-btn", function() {
+
+            let button = $(this);
+
+            let mainRow = button.closest("tr");
+
+            let detailRow = mainRow.next(".detail-row");
+
+            detailRow.toggle();
+
+            if (button.text() === "+") {
+                button.text("-");
+            } else {
+                button.text("+");
+            }
+
+        });
+
+
+
+        function renderTeachers(data) {
+
+            let html = '';
+
+            $.each(data, function(index, teacher) {
+
+                html += `
+                <tr class="main-row">
+
+                <td class="text-center">
+                <button class="expand-btn btn btn-sm btn-primary">+</button>
+                </td>
+
+                <td class="text-center">
+                    <img src="${teacher.profile_image ? '/uploads/teachers/' + teacher.profile_image : '/public/admin/img/default-user.jpg'}" 
+                    class="teacher-img">
+                </td>
+
+                <td class="text-center">${teacher.id_no}</td>
+                <td class="text-center">${teacher.teacher_name}</td>
+                <td class="text-center">${teacher.email}</td>
+                <td class="text-center">${teacher.phone}</td>
+                <td class="text-center">${teacher.gender}</td>
+                <td class="text-center">${teacher.qualification}</td>
+
+                </tr>
+
+                <tr class="detail-row" style="display:none;">
+                <td colspan="7">
+
+                <div style="padding:15px;background:#f8f9fa;border-radius:6px">
+
+                <div class="row">
+
+                <div class="col-md-4">
+                <strong>Experience:</strong> ${teacher.experience}
+                </div>
+
+                <div class="col-md-4">
+                <strong>Joining Date:</strong> ${teacher.joining_date}
+                </div>
+
+                <div class="col-md-4">
+                <strong>Blood Group:</strong> ${teacher.blood_group}
+                </div>
+
+                <div class="col-md-4 mt-2">
+                <strong>DOB:</strong> ${teacher.dob}
+                </div>
+
+                <div class="col-md-8 mt-2">
+                <strong>Address:</strong> ${teacher.address}
+                </div>
+
+                </div>
+
+                </div>
+
+                </td>
+                </tr>
+                `;
+
+            });
+
+            $("#teacher_table_body").html(html);
+
+        }
+
+
+        $("#teacher_search").on("keyup", function() {
+
+            let value = $(this).val().toLowerCase();
+
+            let filtered = teachersData.filter(function(teacher) {
+
+                return (
+                    teacher.id_no.toLowerCase().includes(value) ||
+                    teacher.teacher_name.toLowerCase().includes(value) ||
+                    teacher.email.toLowerCase().includes(value) ||
+                    teacher.phone.toLowerCase().includes(value)
+                );
+
+            });
+
+            renderTeachers(filtered);
+
         });
     </script>
+
+
 
 </body>
 

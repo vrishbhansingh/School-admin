@@ -55,11 +55,11 @@
                             <i class="fas fa-users"></i>All Teachers
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <a href="{{ route('admin.add_teacher') }}" class="nav-link {{ request()->routeIs('admin.add_teacher') ? 'active' : '' }}">
                             <i class="fas fa-user-plus"></i>Add Teacher
                         </a>
-                    </li>
+                    </li> -->
                 </ul>
             </li>
 

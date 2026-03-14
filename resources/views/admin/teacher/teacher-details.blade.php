@@ -2,33 +2,33 @@
 <html class="no-js" lang="en">
 
 <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    <title>Teacher Details - Tech Web Mantra</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <title>Teacher Details - Tech Web Mantra</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <!-- Favicon -->
-    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('public/admin/img/favicon.png') }}" />
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/x-icon" href="{{ asset('public/admin/img/favicon.png') }}" />
 
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
-    <!-- Styles -->
-    <link rel="stylesheet" href="{{ asset('public/admin/css/bootstrap.min.css') }}" />
-    <link rel="stylesheet" href="{{ asset('public/admin/css/normalize.css') }}" />
-    <link rel="stylesheet" href="{{ asset('public/admin/css/main.css') }}" />
-    <link rel="stylesheet" href="{{ asset('public/admin/css/all.min.css') }}" />
-    <link rel="stylesheet" href="{{ asset('public/admin/fonts/flaticon.css') }}" />
-    <link rel="stylesheet" href="{{ asset('public/admin/css/fullcalendar.min.css') }}" />
-    <link rel="stylesheet" href="{{ asset('public/admin/css/animate.min.css') }}" />
-    <link rel="stylesheet" href="{{ asset('public/admin/css/style.css') }}" />
-<link rel="stylesheet" href="{{ asset('public/admin/css/print.css') }}" media="print">
+  <!-- Styles -->
+  <link rel="stylesheet" href="{{ asset('public/admin/css/bootstrap.min.css') }}" />
+  <link rel="stylesheet" href="{{ asset('public/admin/css/normalize.css') }}" />
+  <link rel="stylesheet" href="{{ asset('public/admin/css/main.css') }}" />
+  <link rel="stylesheet" href="{{ asset('public/admin/css/all.min.css') }}" />
+  <link rel="stylesheet" href="{{ asset('public/admin/fonts/flaticon.css') }}" />
+  <link rel="stylesheet" href="{{ asset('public/admin/css/fullcalendar.min.css') }}" />
+  <link rel="stylesheet" href="{{ asset('public/admin/css/animate.min.css') }}" />
+  <link rel="stylesheet" href="{{ asset('public/admin/css/style.css') }}" />
+  <link rel="stylesheet" href="{{ asset('public/admin/css/print.css') }}" media="print">
 
-    <style>
+  <style>
+    .self_data {
+      color: #ffffff;
+    }
 
-        .self_data{
-    color:#ffffff;
-   }
     * {
       box-sizing: border-box;
     }
@@ -46,7 +46,7 @@
       margin: 0px auto;
       background: #fff;
       border-radius: 16px;
-      box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
       position: relative;
       overflow: hidden;
     }
@@ -146,7 +146,8 @@
         visibility: hidden;
       }
 
-      #print-area, #print-area * {
+      #print-area,
+      #print-area * {
         visibility: visible !important;
       }
 
@@ -171,97 +172,97 @@
   </style>
 </head>
 
-<body>  
-
-    <script src="{{ asset('public/admin/js/modernizr-3.6.0.min.js') }}"></script>
-</head>
-
 <body>
+
+  <script src="{{ asset('public/admin/js/modernizr-3.6.0.min.js') }}"></script>
+  </head>
+
+  <body>
     <!-- Preloader -->
     <div id="preloader"></div>
 
     <div id="wrapper" class="wrapper bg-ash">
-        @include('admin.include.header')
+      @include('admin.include.header')
 
-        <div class="dashboard-page-one">
-            @include('admin.include.sidebar')
+      <div class="dashboard-page-one">
+        @include('admin.include.sidebar')
 
-            <div class="dashboard-content-one">
-                <div class="breadcrumbs-area">
-                    <h3>Teacher</h3>
-                    <ul>
-                        <li><a href="{{ route('admin.dashboard') }}">Home</a></li>
-                        <li>Teacher Details</li>
-                    </ul>
+        <div class="dashboard-content-one">
+          <div class="breadcrumbs-area">
+            <h3>Teacher</h3>
+            <ul>
+              <li><a href="{{ route('admin.dashboard') }}">Home</a></li>
+              <li>Teacher Details</li>
+            </ul>
+          </div>
+
+          <!-- Profile Card -->
+          <div id="print-area">
+            <div id="profile-card">
+              <button id="print-btn" onclick="printProfileCard()" title="Print"><i class="fas fa-print"></i></button>
+
+              <div class="left-section">
+                <div class="profile-photo">
+                  <img src="{{ asset('public/admin/student_logo.png') }}" alt="Rahul Kumar">
                 </div>
 
-                <!-- Profile Card -->
-                <div id="print-area">
-                <div id="profile-card">
-  <button id="print-btn" onclick="printProfileCard()" title="Print"><i class="fas fa-print"></i></button>
+                <h2 class="self_data">Rahul Kumar</h2>
+                <p class="self_data">rahulkumar@gmail.com</p>
+                <p class="self_data">+91-9856888841</p>
+                <p class="self_data">Roll No: <strong>10005</strong></p>
+                <p class="self_data">Admission No: <strong>ADM-2024-0005</strong></p>
 
-  <div class="left-section">
-    <div class="profile-photo">
-      <img src="{{ asset('public/admin/student_logo.png') }}" alt="Rahul Kumar">
-    </div>
-    
-    <h2 class="self_data">Rahul Kumar</h2>
-    <p class="self_data">rahulkumar@gmail.com</p>
-    <p class="self_data">+91-9856888841</p>
-    <p class="self_data">Roll No: <strong>10005</strong></p>
-    <p class="self_data">Admission No: <strong>ADM-2024-0005</strong></p>
-    
-  </div>
+              </div>
 
-  <div class="right-section">
-    <div class="section">
-      <div class="section-title">Personal Information</div>
-      <div class="row-line">
-        <div class="row-item"><strong>Gender</strong><span>Male</span></div>
-        <div class="row-item"><strong>DOB</strong><span>07‑Aug‑2016</span></div>
-        <div class="row-item"><strong>Religion</strong><span>Hindu</span></div>
-        <div class="row-item"><strong>Blood Group</strong><span>B+</span></div>
-      </div>
-    </div>
+              <div class="right-section">
+                <div class="section">
+                  <div class="section-title">Personal Information</div>
+                  <div class="row-line">
+                    <div class="row-item"><strong>Gender</strong><span>Male</span></div>
+                    <div class="row-item"><strong>DOB</strong><span>07‑Aug‑2016</span></div>
+                    <div class="row-item"><strong>Religion</strong><span>Hindu</span></div>
+                    <div class="row-item"><strong>Blood Group</strong><span>B+</span></div>
+                  </div>
+                </div>
 
-    <div class="section">
-      <div class="section-title">Guardian Details</div>
-      <div class="row-line">
-        <div class="row-item"><strong>Father's Name</strong><span>Mohan Kumar</span></div>
-        <div class="row-item"><strong>Mother's Name</strong><span>Savitri Devi</span></div>
-        <div class="row-item"><strong>Father's Occupation</strong><span>Graphic Designer</span></div>
-      </div>
-    </div>
+                <div class="section">
+                  <div class="section-title">Guardian Details</div>
+                  <div class="row-line">
+                    <div class="row-item"><strong>Father's Name</strong><span>Mohan Kumar</span></div>
+                    <div class="row-item"><strong>Mother's Name</strong><span>Savitri Devi</span></div>
+                    <div class="row-item"><strong>Father's Occupation</strong><span>Graphic Designer</span></div>
+                  </div>
+                </div>
 
-    <div class="section">
-      <div class="section-title">Contact Information</div>
-      <div class="row-line">
-        <div class="row-item"><strong>Email</strong><span>rahulkumar@gmail.com</span></div>
-        <div class="row-item"><strong>Phone</strong><span>+91-9856888841</span></div>
-        <div class="row-item"><strong>Address</strong><span>B block sector-8, Rohini-110085</span></div>
-      </div>
-    </div>
+                <div class="section">
+                  <div class="section-title">Contact Information</div>
+                  <div class="row-line">
+                    <div class="row-item"><strong>Email</strong><span>rahulkumar@gmail.com</span></div>
+                    <div class="row-item"><strong>Phone</strong><span>+91-9856888841</span></div>
+                    <div class="row-item"><strong>Address</strong><span>B block sector-8, Rohini-110085</span></div>
+                  </div>
+                </div>
 
-    <div class="section">
-      <div class="section-title">Academic Information</div>
-      <div class="row-line">
-        <div class="row-item"><strong>Admission Date</strong><span>07‑Aug‑2019</span></div>
-        <div class="row-item"><strong>Session</strong><span>2024–2025</span></div>
-        <div class="row-item"><strong>Class</strong><span>2</span></div>
-        <div class="row-item"><strong>Section</strong><span>A</span></div>
-        <div class="row-item"><strong>Section</strong><span>Pink</span></div>
-        <div class="row-item"><strong>Class Teacher</strong><span>Ms. Sonam Kumari</span></div>
-      </div>
-    </div>
-  </div>
-</div>
-</div>
-
-
-
-                @include('admin.include.footer')
+                <div class="section">
+                  <div class="section-title">Academic Information</div>
+                  <div class="row-line">
+                    <div class="row-item"><strong>Admission Date</strong><span>07‑Aug‑2019</span></div>
+                    <div class="row-item"><strong>Session</strong><span>2024–2025</span></div>
+                    <div class="row-item"><strong>Class</strong><span>2</span></div>
+                    <div class="row-item"><strong>Section</strong><span>A</span></div>
+                    <div class="row-item"><strong>Section</strong><span>Pink</span></div>
+                    <div class="row-item"><strong>Class Teacher</strong><span>Ms. Sonam Kumari</span></div>
+                  </div>
+                </div>
+              </div>
             </div>
+          </div>
+
+
+
+          @include('admin.include.footer')
         </div>
+      </div>
     </div>
 
     <script src="{{ asset('public/admin/js/jquery-3.3.1.min.js') }}"></script>
@@ -273,16 +274,16 @@
     <script src="{{ asset('public/admin/js/main.js') }}"></script>
 
     <script>
-        window.addEventListener('load', function () {
-            document.getElementById('preloader').style.display = 'none';
-        });
+      window.addEventListener('load', function() {
+        document.getElementById('preloader').style.display = 'none';
+      });
     </script>
 
     <script>
-    function printProfileCard() {
+      function printProfileCard() {
         window.print();
-    }
-</script>
-</body>
+      }
+    </script>
+  </body>
 
 </html>
