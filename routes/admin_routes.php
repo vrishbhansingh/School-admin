@@ -69,9 +69,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/teacher-list', [TeacherController::class, 'teacher_list'])->name('teacher_list');
         Route::get('/teacher-details', [TeacherController::class, 'teacher_details'])->name('teacher_details');
         Route::get('/add-teacher', [TeacherController::class, 'add_teacher'])->name('add_teacher');
+        Route::post('/add-teacher-data', [TeacherController::class, 'add_teacher_data'])->name('add_teacher_data');
         Route::get('/edit-teacher/{id}', [TeacherController::class, 'edit_teacher'])->name('edit_teacher');
+        Route::post('/update-teacher', [TeacherController::class, 'update_teacher'])->name('update_teacher');
         Route::get('/teacher-payments', [TeacherController::class, 'teacher_payments'])->name('teacher_payments');
         Route::get('/get-teachers-data', [TeacherController::class, 'get_teachers_data'])->name('get_teachers_data');
+        Route::post('/update-teacher-status', [TeacherController::class, 'update_teacher_status'])->name('update_teachers_status');
 
         Route::get('/parent-list', [ParentController::class, 'parent_list'])->name('parent_list');
         Route::get('/parent-details', [ParentController::class, 'parent_details'])->name('parent_details');

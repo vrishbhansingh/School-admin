@@ -18,6 +18,8 @@
     <link rel="stylesheet" href="{{ asset('public/admin/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('public/admin/css/datepicker.min.css') }}">
     <link rel="stylesheet" href="{{ asset('public/admin/css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+
 
     <style>
         .form-section-title {
@@ -63,12 +65,19 @@
 
             <div class="dashboard-content-one">
 
-                <div class="breadcrumbs-area">
-                    <h3>Teacher</h3>
-                    <ul>
-                        <li><a href="{{ route('admin.dashboard') }}">Home</a></li>
-                        <li>Edit Teacher</li>
-                    </ul>
+                <div class="breadcrumbs-area d-flex justify-content-between align-items-center">
+                    <div>
+                        <h3>Teacher</h3>
+                        <ul>
+                            <li><a href="{{ route('admin.dashboard') }}">Home</a></li>
+                            <li>Edit Teacher</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <a href="{{ route('admin.teacher_list') }}" class="btn-fill-lg bg-blue-dark btn-hover-yellow">
+                            Back
+                        </a>
+                    </div>
                 </div>
 
                 <div class="card height-auto">
@@ -76,7 +85,7 @@
 
                         <h4 class="mb-4">Edit Teacher</h4>
 
-                        <form method="POST" enctype="multipart/form-data">
+                        <form method="POST" enctype="multipart/form-data" id="edit_teacher_details">
                             @csrf
 
                             <div class="row">
@@ -90,12 +99,7 @@
                                         <div class="form-section-title">Basic Information</div>
 
                                         <div class="row">
-
-                                            <div class="col-md-6 form-group">
-                                                <label>Teacher ID</label>
-                                                <input type="text" name="id_no" class="form-control" value="{{ $teacher->id_no }}">
-                                            </div>
-
+                                            <input type="text" name="teacher_id" value="{{ $teacher->id }}" hidden>
                                             <div class="col-md-6 form-group">
                                                 <label>Teacher Name</label>
                                                 <input type="text" name="teacher_name" class="form-control" value="{{ $teacher->teacher_name }}">
@@ -234,6 +238,8 @@
     <script src="{{ asset('public/admin/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('public/admin/js/select2.min.js') }}"></script>
     <script src="{{ asset('public/admin/js/datepicker.min.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
 
     <script>
         $('.select2').select2();
@@ -260,6 +266,27 @@
             }
 
         });
+
+        $(document).on('submit', '#edit_teacher_details', function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            $.ajax({
+                url: "{{ route('admin.update_teacher') }}",
+                method: "POST",
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    toastr.success(response.message);
+                    setTimeout(() => {
+                        window.location.href = "{{ route('admin.teacher_list') }}";
+                    }, 1500);
+                },
+                error: function(xhr) {
+                    toastr.error('An error occurred while updating the teacher.');
+                }
+            });
+        })
     </script>
 
 </body>

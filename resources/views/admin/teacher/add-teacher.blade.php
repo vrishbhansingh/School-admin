@@ -19,13 +19,15 @@
     <link rel="stylesheet" href="{{ asset('public/admin/css/main.css') }}">
     <link rel="stylesheet" href="{{ asset('public/admin/css/all.min.css') }}">
     <link rel="stylesheet" href="{{ asset('public/admin/fonts/flaticon.css') }}">
-    
+
     <link rel="stylesheet" href="{{ asset('public/admin/css/animate.min.css') }}">
-    
+
     <link rel="stylesheet" href="{{ asset('public/admin/css/select2.min.css') }}">
     <!-- Date Picker CSS -->
     <link rel="stylesheet" href="{{ asset('public/admin/css/datepicker.min.css') }}">
     <link rel="stylesheet" href="{{ asset('public/admin/css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+
 
     <!-- Preloader CSS -->
     <style>
@@ -52,8 +54,13 @@
         }
 
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
         }
     </style>
 
@@ -65,13 +72,13 @@
     <div id="preloader"></div>
     <!-- Preloader End Here -->
     <div id="wrapper" class="wrapper bg-ash">
-         <!-- Header Menu Area Start Here -->
+        <!-- Header Menu Area Start Here -->
         @include('admin.include.header')
         <!-- Header Menu Area End Here -->
         <!-- Page Area Start Here -->
         <div class="dashboard-page-one">
             <!-- Sidebar Area Start Here -->
-           @include('admin.include.sidebar')
+            @include('admin.include.sidebar')
             <!-- Sidebar Area End Here -->
             <div class="dashboard-content-one">
                 <!-- Breadcubs Area Start Here -->
@@ -92,117 +99,125 @@
                             <div class="item-title">
                                 <h3>Add New Teacher</h3>
                             </div>
-                           <div class="dropdown">
-                                <a class="dropdown-toggle" href="#" role="button" 
-                                data-toggle="dropdown" aria-expanded="false">...</a>
-        
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item" href="#"><i class="fas fa-times text-orange-red"></i>Close</a>
-                                    <a class="dropdown-item" href="#"><i class="fas fa-cogs text-dark-pastel-green"></i>Edit</a>
-                                    <a class="dropdown-item" href="#"><i class="fas fa-redo-alt text-orange-peel"></i>Refresh</a>
-                                </div>
+                            <div>
+                                <a href="{{ route('admin.teacher_list') }}" class="btn-fill-lg bg-blue-dark btn-hover-yellow">
+                                    Back
+                                </a>
                             </div>
                         </div>
-                        <form class="new-added-form">
+                        <form class="new-added-form" method="POST" enctype="multipart/form-data" id="add_teacher_data">
+                            @csrf
+
+                            <input type="hidden" name="school_id" value="{{ Auth::guard('admin')->user()->school_id }}">
+
                             <div class="row">
+
+                                <!-- Teacher Name -->
                                 <div class="col-xl-3 col-lg-6 col-12 form-group">
-                                    <label>First Name *</label>
-                                    <input type="text" placeholder="First Name" class="form-control">
+                                    <label>Teacher Name *</label>
+                                    <input type="text" name="teacher_name" class="form-control" placeholder="Enter Teacher Name">
                                 </div>
+
+                                <!-- Email -->
                                 <div class="col-xl-3 col-lg-6 col-12 form-group">
-                                    <label>Last Name *</label>
-                                    <input type="text" placeholder="Last Name" class="form-control">
+                                    <label>Email *</label>
+                                    <input type="email" name="email" class="form-control" placeholder="Enter Email">
                                 </div>
+
+                                <!-- Phone -->
+                                <div class="col-xl-3 col-lg-6 col-12 form-group">
+                                    <label>Phone *</label>
+                                    <input type="text" name="phone" class="form-control" placeholder="Enter Phone Number">
+                                </div>
+
+                                <!-- Gender -->
                                 <div class="col-xl-3 col-lg-6 col-12 form-group">
                                     <label>Gender *</label>
-                                    <select class="select2">
-                                        <option value="">Please Select Gender *</option>
-                                        <option value="1">Male</option>
-                                        <option value="2">Female</option>
-                                        <option value="3">Others</option>
+                                    <select name="gender" class="select2 form-control">
+                                        <option value="">Select Gender</option>
+                                        <option value="M">Male</option>
+                                        <option value="F">Female</option>
+                                        <option value="O">Other</option>
                                     </select>
                                 </div>
+
+                                <!-- DOB -->
                                 <div class="col-xl-3 col-lg-6 col-12 form-group">
                                     <label>Date Of Birth *</label>
-                                    <input type="text" placeholder="dd/mm/yyyy" class="form-control air-datepicker">
-                                    <i class="far fa-calendar-alt"></i>
+                                    <input type="text" name="dob" class="form-control air-datepicker" placeholder="YYYY-MM-DD">
                                 </div>
+
+                                <!-- Blood Group -->
                                 <div class="col-xl-3 col-lg-6 col-12 form-group">
-                                    <label>ID No</label>
-                                    <input type="text" placeholder="ID No" class="form-control">
-                                </div>
-                                <div class="col-xl-3 col-lg-6 col-12 form-group">
-                                    <label>Blood Group *</label>
-                                    <select class="select2">
-                                        <option value="">Please Select Group *</option>
-                                        <option value="1">A+</option>
-                                        <option value="2">A-</option>
-                                        <option value="3">B+</option>
-                                        <option value="3">B-</option>
-                                        <option value="3">O+</option>
-                                        <option value="3">O-</option>
+                                    <label>Blood Group</label>
+                                    <select name="blood_group" class="select2 form-control">
+                                        <option value="">Select Blood Group</option>
+                                        <option value="A+">A+</option>
+                                        <option value="A-">A-</option>
+                                        <option value="B+">B+</option>
+                                        <option value="B-">B-</option>
+                                        <option value="O+">O+</option>
+                                        <option value="O-">O-</option>
+                                        <option value="AB+">AB+</option>
+                                        <option value="AB-">AB-</option>
                                     </select>
                                 </div>
+
+                                <!-- Qualification -->
                                 <div class="col-xl-3 col-lg-6 col-12 form-group">
-                                    <label>Religion *</label>
-                                    <select class="select2">
-                                        <option value="">Please Select Religion *</option>
-                                        <option value="1">Islam</option>
-                                        <option value="2">Hindu</option>
-                                        <option value="3">Christian</option>
-                                        <option value="3">Buddish</option>
-                                        <option value="3">Others</option>
-                                    </select>
+                                    <label>Qualification</label>
+                                    <input type="text" name="qualification" class="form-control" placeholder="Enter Qualification">
                                 </div>
+
+                                <!-- Experience -->
                                 <div class="col-xl-3 col-lg-6 col-12 form-group">
-                                    <label>E-Mail</label>
-                                    <input type="email" placeholder="E-Mail" class="form-control">
+                                    <label>Experience</label>
+                                    <input type="text" name="experience" class="form-control" placeholder="Example: 5 Years">
                                 </div>
+
+                                <!-- Joining Date -->
                                 <div class="col-xl-3 col-lg-6 col-12 form-group">
-                                    <label>Class *</label>
-                                    <select class="select2">
-                                        <option value="">Please Select Class *</option>
-                                        <option value="1">Play</option>
-                                        <option value="2">Nursery</option>
-                                        <option value="3">One</option>
-                                        <option value="3">Two</option>
-                                        <option value="3">Three</option>
-                                        <option value="3">Four</option>
-                                        <option value="3">Five</option>
-                                    </select>
+                                    <label>Joining Date</label>
+                                    <input type="text" name="joining_date" class="form-control air-datepicker" placeholder="YYYY-MM-DD">
                                 </div>
-                                <div class="col-xl-3 col-lg-6 col-12 form-group">
-                                    <label>Section *</label>
-                                    <select class="select2">
-                                        <option value="">Please Select Section *</option>
-                                        <option value="1">Pink</option>
-                                        <option value="2">Blue</option>
-                                        <option value="3">Bird</option>
-                                        <option value="3">Rose</option>
-                                        <option value="3">Red</option>
-                                    </select>
-                                </div>
-                                <div class="col-xl-3 col-lg-6 col-12 form-group">
+
+                                <!-- Address -->
+                                <div class="col-xl-6 col-lg-12 col-12 form-group">
                                     <label>Address</label>
-                                    <input type="text" placeholder="Address" class="form-control">
+                                    <input type="text" name="address" class="form-control" placeholder="Enter Address">
                                 </div>
-                                <div class="col-xl-3 col-lg-6 col-12 form-group">
-                                    <label>Phone</label>
-                                    <input type="text" placeholder="Phone" class="form-control">
+
+                                <!-- Profile Image -->
+                                <div class="col-xl-6 col-lg-12 col-12 form-group">
+                                    <label>Teacher Photo</label>
+
+                                    <input type="file"
+                                        name="profile_image"
+                                        id="profile_image"
+                                        class="form-control-file"
+                                        accept="image/*">
+
+                                    <img id="preview_image"
+                                        src="{{ asset('public/admin/img/default-user.png') }}"
+                                        width="120"
+                                        style="margin-top:10px;border-radius:5px; display:none;">
                                 </div>
-                                <div class="col-lg-6 col-12 form-group">
-                                    <label>Short BIO</label>
-                                    <textarea class="textarea form-control" placeholder="Short BIO" name="message" id="form-message" cols="10" rows="9"></textarea>
-                                </div>
-                                <div class="col-lg-6 col-12 form-group mg-t-30">
-                                    <label class="text-dark-medium">Upload Student Photo (150px X 150px)</label>
-                                    <input type="file" class="form-control-file">
-                                </div>
+
+                                <!-- Buttons -->
                                 <div class="col-12 form-group mg-t-8">
-                                    <button type="submit" class="btn-fill-lg btn-gradient-yellow btn-hover-bluedark">Save</button>
-                                    <button type="reset" class="btn-fill-lg bg-blue-dark btn-hover-yellow">Reset</button>
+
+                                    <button type="submit" class="btn-fill-lg btn-gradient-yellow btn-hover-bluedark">
+                                        Save Teacher
+                                    </button>
+
+                                    <button type="reset" class="btn-fill-lg bg-blue-dark btn-hover-yellow">
+                                        Reset
+                                    </button>
+
                                 </div>
+
                             </div>
+
                         </form>
                     </div>
                 </div>
@@ -221,11 +236,58 @@
     <script src="{{ asset('public/admin/js/datepicker.min.js') }}"></script>
     <script src="{{ asset('public/admin/js/jquery.scrollUp.min.js') }}"></script>
     <script src="{{ asset('public/admin/js/main.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
 
     <!-- Preloader Hide Script -->
     <script>
-        window.addEventListener('load', function () {
+        window.addEventListener('load', function() {
             document.getElementById('preloader').style.display = 'none';
+        });
+
+        $(document).on('submit', '#add_teacher_data', function(e) {
+            e.preventDefault();
+
+            let formData = new FormData(this);
+
+            $.ajax({
+                url: "{{ route('admin.add_teacher_data') }}",
+                method: "POST",
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function(response) {
+                    toastr.success(response.message);
+                    window.location.href = "{{ route('admin.teacher_list') }}";
+                    $('#add_teacher_data')[0].reset();
+                },
+                error: function(xhr) {
+                    alert(xhr.responseJSON.message || 'An error occurred while adding the teacher.');
+                }
+            });
+        });
+
+        document.getElementById("profile_image").addEventListener("change", function(e) {
+
+            const file = e.target.files[0];
+
+            if (file) {
+
+                const reader = new FileReader();
+
+                reader.onload = function(event) {
+
+                    const preview = document.getElementById("preview_image");
+
+                    preview.src = event.target.result;
+                    preview.style.display = "block";
+
+                }
+
+                reader.readAsDataURL(file);
+
+            }
+
         });
     </script>
 

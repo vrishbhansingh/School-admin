@@ -116,6 +116,8 @@
                                         <th>DOB</th>
                                         <th>Phone</th>
                                         <th>Email</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>

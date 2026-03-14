@@ -99,12 +99,64 @@
             object-fit: cover;
             border: 2px solid #ddd;
         }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 45px;
+            height: 22px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+        }
+
+        input:checked+.slider {
+            background-color: #28a745;
+        }
+
+        input:checked+.slider:before {
+            transform: translateX(22px);
+        }
+
+        .slider.round {
+            border-radius: 34px;
+        }
+
+        .slider.round:before {
+            border-radius: 50%;
+        }
     </style>
 
     <script src="{{ asset('public/admin/js/modernizr-3.6.0.min.js') }}"></script>
 </head>
 
 <body>
+
     <!-- Preloader Start Here -->
     <div id="preloader"></div>
     <!-- Preloader End Here -->
@@ -183,6 +235,7 @@
                                         <th class="text-center">Phone</th>
                                         <th class="text-center">Gender</th>
                                         <th class="text-center">Qualification</th>
+                                        <th class="text-center">Status</th>
                                         <th class="text-center">Action</th>
                                     </tr>
                                 </thead>
@@ -199,6 +252,42 @@
             </div>
         </div>
         <!-- Page Area End Here -->
+    </div>
+
+    <div class="modal fade" id="statusModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title">Change Status</h5>
+                    <button type="button" class="close" data-dismiss="modal">
+                        &times;
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <p>Are you sure you want to change this teacher status?</p>
+
+                    <input type="hidden" id="status_teacher_id">
+                    <input type="hidden" id="status_value">
+                </div>
+
+                <div class="modal-footer">
+
+                    <button class="btn btn-secondary" data-dismiss="modal">
+                        Cancel
+                    </button>
+
+                    <button class="btn btn-success" id="confirm_status">
+                        <span class="btn-text">Submit</span>
+                        <span class="btn-loader" style="display:none;">
+                            <i class="fas fa-spinner fa-spin"></i> Updating...
+                        </span>
+                    </button>
+                </div>
+
+            </div>
+        </div>
     </div>
     <!-- jquery-->
     <script src="{{ asset('public/admin/js/jquery-3.3.1.min.js') }}"></script>
@@ -247,8 +336,9 @@
                                 <button class="expand-btn btn btn-sm btn-primary">+</button>
                             </td>
                            <td class="text-center">
-                                <img src="${teacher.profile_image ? '/uploads/teachers/' + teacher.profile_image : '/public/admin/img/default-user.jpg'}" 
-                                class="teacher-img">
+                                <img 
+                                    src="${teacher.profile_image ? teacherImageBase + teacher.profile_image : defaultTeacherImage}"
+                                    class="teacher-img">
                             </td>
                             <td class="text-center">${teacher.id_no}</td>
 
@@ -257,6 +347,15 @@
                             <td class="text-center">${teacher.phone}</td>
                             <td class="text-center">${teacher.gender}</td>
                             <td class="text-center">${teacher.qualification}</td>
+                            <td class="text-center">
+                                <label class="switch">
+                                <input type="checkbox" 
+                                    class="status-toggle" 
+                                    data-id="${teacher.id}"
+                                    ${teacher.status == 'Active' ? 'checked' : ''}>
+                                <span class="slider round"></span>
+                                </label>
+                            </td>
                             <td class="text-center">
                                 <a href="{{ url('admin/edit-teacher') }}/${teacher.id}" class="btn btn-sm btn-info">
                                     <i class="fas fa-edit"></i>
@@ -346,9 +445,10 @@
                 </td>
 
                 <td class="text-center">
-                    <img src="${teacher.profile_image ? '/uploads/teachers/' + teacher.profile_image : '/public/admin/img/default-user.jpg'}" 
-                    class="teacher-img">
-                </td>
+                    <img 
+                        src="${teacher.profile_image ? teacherImageBase + teacher.profile_image : defaultTeacherImage}"
+                        class="teacher-img">
+                </td>       
 
                 <td class="text-center">${teacher.id_no}</td>
                 <td class="text-center">${teacher.teacher_name}</td>
@@ -356,7 +456,20 @@
                 <td class="text-center">${teacher.phone}</td>
                 <td class="text-center">${teacher.gender}</td>
                 <td class="text-center">${teacher.qualification}</td>
-
+                <td class="text-center">
+                    <label class="switch">
+                    <input type="checkbox" 
+                        class="status-toggle" 
+                        data-id="${teacher.id}"
+                        ${teacher.status == 'Active' ? 'checked' : ''}>
+                    <span class="slider round"></span>
+                    </label>
+                    </td>
+                <td class="text-center">
+                                <a href="{{ url('admin/edit-teacher') }}/${teacher.id}" class="btn btn-sm btn-info">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                            </td>
                 </tr>
 
                 <tr class="detail-row" style="display:none;">
@@ -417,6 +530,93 @@
             });
 
             renderTeachers(filtered);
+
+        });
+
+        $('#statusModal').on('hidden.bs.modal', function() {
+
+            if (currentToggle) {
+
+                currentToggle.prop("checked", previousState);
+
+                currentToggle = null;
+                previousState = null;
+
+            }
+
+        });
+
+        let currentToggle = null;
+        let previousState = null;
+
+        $(document).on("change", ".status-toggle", function() {
+
+            currentToggle = $(this);
+
+            // save old value
+            previousState = !currentToggle.prop("checked");
+
+            let id = currentToggle.data("id");
+            let status = currentToggle.prop("checked") ? 1 : 0;
+
+            $("#status_teacher_id").val(id);
+            $("#status_value").val(status);
+
+            $("#statusModal").modal("show");
+
+        });
+
+
+        $("#confirm_status").click(function() {
+
+            let id = $("#status_teacher_id").val();
+            let status = $("#status_value").val();
+
+            // loader show
+            $("#confirm_status").prop("disabled", true);
+            $("#confirm_status .btn-text").hide();
+            $("#confirm_status .btn-loader").show();
+            $.ajax({
+
+                url: "{{ url('admin/update-teacher-status') }}",
+
+                type: "POST",
+
+                data: {
+                    id: id,
+                    status: status,
+                    _token: "{{ csrf_token() }}"
+                },
+
+                success: function(response) {
+
+                    $("#statusModal").modal("hide");
+
+                    
+                    $("#confirm_status").prop("disabled", false);
+                    $("#confirm_status .btn-text").show();
+                    $("#confirm_status .btn-loader").hide();
+                    toastr.success("Status updated successfully");
+
+                    currentToggle = null;
+                    previousState = null;
+
+                    setTimeout(function() {
+                        loadTeacherData();
+                    }, 500);
+
+                },
+
+                error: function() {
+
+                    toastr.error("Status update failed");
+                    $("#confirm_status").prop("disabled", false);
+                    $("#confirm_status .btn-text").show();
+                    $("#confirm_status .btn-loader").hide();
+
+                }
+
+            });
 
         });
     </script>
