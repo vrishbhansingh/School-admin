@@ -47,7 +47,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         Route::post('/register_student', [StudentController::class, 'register_student'])->name('register_student');
         Route::get('/student-list', [StudentController::class, 'student_list'])->name('student_list');
-        Route::post('/change_student_status', [StudentController::class, 'change_student_status'])->name('change_student_status');
+        Route::post('/change-student-status', [StudentController::class, 'change_student_status'])->name('change_student_status');
         Route::get('/student-details/{id}', [StudentController::class, 'student_details'])->name('student_details');
         Route::get('/edit-student-details/{id}', [StudentController::class, 'edit_student_details'])->name('edit_student_details');
         Route::get('/print-student-id-card/{id}', [StudentController::class, 'print_student_id_card'])->name('print_student_id_card');

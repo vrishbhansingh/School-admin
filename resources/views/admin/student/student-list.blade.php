@@ -8,13 +8,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('public/admin/img/favicon.png') }}">
-
-    <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- Styles -->
     <link rel="stylesheet" href="{{ asset('public/admin/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('public/admin/css/normalize.css') }}">
     <link rel="stylesheet" href="{{ asset('public/admin/css/main.css') }}">
@@ -24,26 +20,27 @@
     <link rel="stylesheet" href="{{ asset('public/admin/css/animate.min.css') }}">
     <link rel="stylesheet" href="{{ asset('public/admin/css/style.css') }}">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
 
-    <!-- Preloader CSS -->
+
     <style>
-        /* Add your pre-existing styles here */
-        /* Additional styles for the modal */
         .modal-dialog {
             max-width: 500px;
         }
+
         .modal-content {
             padding: 20px;
         }
+
         .btn-upload {
-            background-color: #007bff;
-            color: white;
-        }
-        .btn-upload:hover {
-            background-color: #0056b3;
+            background: #007bff;
+            color: #fff;
         }
 
-        /* Style for the buttons container */
+        .btn-upload:hover {
+            background: #0056b3;
+        }
+
         .button-container {
             display: flex;
             justify-content: space-between;
@@ -54,8 +51,47 @@
             margin-right: 15px;
         }
 
-        .btn-upload {
-            margin-left: 15px;
+        td.details-control {
+            cursor: pointer;
+            font-weight: bold;
+            text-align: center;
+            font-size: 18px;
+            color: #007bff;
+        }
+
+        .child-row {
+            background: #f8f9fa;
+            padding: 15px;
+        }
+
+        #student_addmission_list thead th {
+            position: sticky;
+            top: 0;
+            background: #fff;
+            z-index: 10;
+            border-bottom: 2px solid #ddd;
+        }
+
+        .dataTables_wrapper {
+            overflow-x: hidden;
+        }
+
+        /* Proper Status Button */
+        .status-btn {
+            min-width: 110px;
+            padding: 7px 16px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 600;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .status-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
         }
     </style>
 
@@ -63,17 +99,19 @@
 </head>
 
 <body>
-    <!-- Preloader -->
+
     <div id="preloader"></div>
 
     <div id="wrapper" class="wrapper bg-ash">
+
         @include('admin.include.header')
 
         <div class="dashboard-page-one">
+
             @include('admin.include.sidebar')
 
             <div class="dashboard-content-one">
-                <!-- Breadcrumb + Button -->
+
                 <div class="breadcrumbs-area d-flex justify-content-between align-items-center flex-wrap">
                     <div>
                         <h3>Students List</h3>
@@ -83,307 +121,336 @@
                         </ul>
                     </div>
 
-                    <!-- Buttons container with flexbox -->
                     <div class="button-container mt-2 mt-md-0">
                         <a href="{{ route('admin.add_student') }}" class="btn btn-primary btn-lg">
                             <i class="fas fa-plus-circle mr-2"></i> Add Student
                         </a>
-                        
-                        <!-- Button to trigger the modal -->
+
                         <button class="btn btn-upload btn-lg" data-toggle="modal" data-target="#uploadModal">
                             <i class="fas fa-upload mr-2"></i> Upload Bulk Student
                         </button>
                     </div>
                 </div>
 
-                <!-- Student Table Card -->
                 <div class="card">
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table display data-table text-nowrap" id="student_addmission_list">
                                 <thead>
                                     <tr>
-                                        <th>#</th>
-                                        <th>Photo</th>
-                                        <th>Roll</th>
-                                        <th>Admission No</th>
-                                        <th>Name</th>
-                                        <th>Gender</th>
-                                        <th>Class</th>
-                                        <th>Section</th>
-                                        <th>Father Name</th>
-                                        <th>Address</th>
-                                        <th>DOB</th>
-                                        <th>Phone</th>
-                                        <th>Email</th>
-                                        <th>Status</th>
-                                        <th>Action</th>
+                                        <th></th>
+                                        <th  class="text-center">#</th>
+                                        <th  class="text-center">Photo</th>
+                                        <th  class="text-center">Roll</th>
+                                        <th  class="text-center">Admission No</th>
+                                        <th  class="text-center">Name</th>
+                                        <th  class="text-center">Gender</th>
+                                        <th  class="text-center">Class</th>
+                                        <th  class="text-center">Section</th>
+                                        <th  class="text-center">Father Name</th>
+                                        <th  class="text-center">Address</th>
+                                        <th  class="text-center">DOB</th>
+                                        <th  class="text-center">Phone</th>
+                                        <th  class="text-center">Email</th>
+                                        <th  class="text-center">Status</th>
+                                        <th  class="text-center">Action</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    {{-- Data will be populated by DataTables --}}
-                                </tbody>
+                                <tbody></tbody>
                             </table>
                         </div>
                     </div>
                 </div>
 
                 @include('admin.include.footer')
+
             </div>
         </div>
     </div>
 
-    <!-- Modal for Uploading Bulk Students -->
-<div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="uploadModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header d-flex justify-content-between align-items-center">
-                <h5 class="modal-title" id="uploadModalLabel">Upload Bulk Student Data</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+    <!-- Upload Modal -->
+    <div class="modal fade" id="uploadModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title">Upload Bulk Student Data</h5>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <form id="bulkUploadForm" method="POST" enctype="multipart/form-data">
+                    @csrf
+
+                    <div class="modal-body">
+
+                        <div class="text-right mb-3">
+                            <a href="https://techwebmantra.com/school/public/student_data.csv" class="btn btn-info btn-lg">
+                                <i class="fas fa-download mr-2"></i> Download Format
+                            </a>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Select Class</label>
+                            <select class="form-control" name="class_id" id="class_id">
+                                <option value="">Select Class</option>
+                                @foreach($Sclass as $class)
+                                <option value="{{ $class->id }}">{{ $class->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Select Section</label>
+                            <select class="form-control" name="section_id" id="section_id">
+                                <option value="">Please Select Section *</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Choose File</label>
+                            <input type="file" class="form-control" name="file" id="file">
+                        </div>
+
+                        <div class="progress mt-3" style="display:none;height:20px">
+                            <div class="progress-bar bg-success" style="width:0%">0%</div>
+                        </div>
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btn-lg" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary btn-lg">Upload & Update</button>
+                    </div>
+                </form>
+
             </div>
-            
-            <form id="bulkUploadForm" method="POST" enctype="multipart/form-data">
-    @csrf
-    <div class="modal-body">
-        <!-- Download Button -->
-        <div class="text-right mb-3">
-            <a href="https://techwebmantra.com/school/public/student_data.csv" class="btn btn-info btn-lg">
-                <i class="fas fa-download mr-2"></i> Download Format
-            </a>
         </div>
+    </div>
 
-        <!-- Class -->
-        <div class="form-group">
-            <label for="class">Select Class</label>
-            <select class="form-control" name="class_id" id="class_id" required>
-                <option value="">Select Class</option>
-                @foreach($Sclass as $class)
-                    <option value="{{ $class->id }}">{{ $class->name }}</option>
-                @endforeach
-            </select>
-        </div>
-
-        <!-- Section -->
-        <div class="form-group">
-            <label for="section">Select Section</label>
-            <select class="form-control" name="section_id" id="section_id" required>
-                <option value="">Please Select Section *</option>
-            </select>
-        </div>
-
-        <!-- File -->
-        <div class="form-group">
-            <label for="file">Choose File (CSV/Excel)</label>
-            <input type="file" class="form-control" name="file" id="file" accept=".csv,.xls,.xlsx" required>
-        </div>
-
-        <!-- Progress Bar -->
-        <div class="progress mt-3" style="height: 20px; display:none;">
-            <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 0%;">
-                0%
+    <!-- Status Change Modal -->
+    <div class="modal fade" id="statusModal" tabindex="-1" role="dialog" aria-labelledby="statusModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="statusModalLabel">Confirm Status Change</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span>&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="statusModalMessage">
+                    Are you sure you want to change the status?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="confirmStatusChange">Yes, Change</button>
+                </div>
             </div>
         </div>
     </div>
 
-    <div class="modal-footer">
-        <button type="button" class="btn btn-secondary btn-lg" data-dismiss="modal">Cancel</button>
-        <button type="submit" class="btn btn-primary btn-lg">Upload & Update</button>
-    </div>
-</form>
-
-        </div>
-    </div>
-</div>
-
-
-
-    <!-- Scripts -->
     <script src="{{ asset('public/admin/js/jquery-3.3.1.min.js') }}"></script>
     <script src="{{ asset('public/admin/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('public/admin/js/main.js') }}"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
-    <!-- Preloader Hide Script -->
     <script>
-        window.addEventListener('load', function () {
+        window.addEventListener('load', function() {
             document.getElementById('preloader').style.display = 'none';
         });
 
-        $(document).ready(function () {
+        $(document).ready(function() {
+
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
 
-            $('#student_addmission_list').DataTable({
+            let selectedStudentId = '';
+            let selectedNewStatus = '';
+            let selectedButton = null;
+
+            function format(row) {
+                let html = '';
+                html += '<div class="child-row">';
+                html += '<div><b>Section:</b> ' + (row.section_name || '') + '</div>';
+                html += '<div><b>Father Name:</b> ' + (row.father_name || '') + '</div>';
+                html += '<div><b>Address:</b> ' + (row.address || '') + '</div>';
+                html += '<div><b>DOB:</b> ' + (row.dob || '') + '</div>';
+                html += '<div><b>Phone:</b> ' + (row.phone || '') + '</div>';
+                html += '<div><b>Email:</b> ' + (row.email || '') + '</div>';
+                html += '</div>';
+                return html;
+            }
+
+            var table = $('#student_addmission_list').DataTable({
                 processing: true,
                 serverSide: true,
                 pageLength: 10,
+                scrollX: false,
                 ajax: {
                     url: "{{ route('admin.get_student_addmission_list') }}",
-                    type: "POST",
-                    dataFilter: function (data) {
-                        let json = jQuery.parseJSON(data);
-                        json.recordsTotal = json.recordsTotal;
-                        json.recordsFiltered = json.recordsFiltered;
-                        json.data = json.data.map(function (row, index) {
-                            // Add print button
-                            row[13] = `<a href="/admin/print-registration/${row[2]}" target="_blank" title="Print">
-                                            <i class="fas fa-print text-primary"></i>
-                                        </a>`;
-                            return row;
-                        });
-                        return JSON.stringify(json);
-                    }
+                    type: "POST"
                 },
-                order: [[0, 'desc']],
-                columns: [
-                    { data: 0, name: 'id' },
-                    { data: 1, name: 'photo' },
-                    { data: 2, name: 'roll_no' },
-                    { data: 3, name: 'admission_no' },
-                    { data: 4, name: 'name' },
-                    { data: 5, name: 'gender' },
-                    { data: 6, name: 'class' },
-                    { data: 7, name: 'section' },
-                    { data: 8, name: 'parents' },
-                    { data: 9, name: 'address' },
-                    { data: 10, name: 'dob' },
-                    { data: 11, name: 'phone' },
-                    { data: 12, name: 'email' },
+                columns: [{
+                        data: null,
+                        orderable: false,
+                        searchable: false,
+                        className: 'details-control',
+                        render: function() {
+                            return '<span style="cursor:pointer;font-weight:bold;">+</span>';
+                        }
+                    },
+                    {
+                        data: null,
+                        orderable: false,
+                        searchable: false,
+                        render: function(data, type, row, meta) {
+                            return meta.row + meta.settings._iDisplayStart + 1;
+                        }
+                    },
+                    {
+                        data: 'photo',
+                        orderable: false,
+                        searchable: false,
+                        render: function(data) {
+                            return '<img src="{{ url("public/admin/student") }}/' + data + '" style="width:60px;height:60px;object-fit:cover;border-radius:6px;">';
+                        }
+                    },
+                    {
+                        data: 'roll_no'
+                    },
+                    {
+                        data: 'addmission_no'
+                    },
+                    {
+                        data: 'name',
+                        render: function(data, type, row) {
+                            return '<div style="width:140px;"><a href="{{ url("/admin/student-details") }}/' + btoa(row.id) + '">' + data + '</a></div>';
+                        }
+                    },
+                    {
+                        data: 'gender'
+                    },
+                    {
+                        data: 'class_name'
+                    },
+                    {
+                        data: 'section_name'
+                    },
+                    {
+                        data: 'father_name',
+                        visible: false
+                    },
+                    {
+                        data: 'address',
+                        visible: false
+                    },
+                    {
+                        data: 'dob',
+                        visible: false
+                    },
+                    {
+                        data: 'phone',
+                        visible: false
+                    },
+                    {
+                        data: 'email',
+                        visible: false
+                    },
+                    {
+                        data: 'status',
+                        orderable: false,
+                        searchable: false,
+                        render: function(data, type, row) {
+                            return '<button type="button" class="status-btn btn ' +
+                                (data === 'ACTIVE' ? 'btn-success' : 'btn-danger') +
+                                ' toggle-status" data-id="' + row.id + '" data-status="' + data + '">' +
+                                data +
+                                '</button>';
+                        }
+                    },
+                    {
+                        data: null,
+                        orderable: false,
+                        searchable: false,
+                        render: function(data, type, row) {
+                            return '<a href="{{ url("/admin/edit-student") }}/' + row.id + '" class="btn btn-sm btn-info"><i class="fas fa-edit"></i></a>';
+                        }
+                    }
                 ]
             });
-        });
-        
-        
-        $('#class_id').on('change', function () {
-        var class_id = $(this).val();
 
-        var form = new FormData();
-        form.append("class_id", class_id);
+            $('#student_addmission_list tbody').on('click', 'td.details-control', function() {
+                var tr = $(this).closest('tr');
+                var row = table.row(tr);
+                var icon = $(this).find('span');
 
-        $.ajax({
-            url: "{{ route('admin.get_section_data') }}",
-            type: "POST",
-            data: form,
-            dataType: 'json',
-            processData: false,
-            contentType: false,
-
-            beforeSend: function () {
-                $('#load').show();
-                $('#spin-request-add').show();
-            },
-
-            success: function (result) {
-                if (result.status) {
-                    var $sectionDropdown = $('#section_id');
-                    $sectionDropdown.empty();
-                    $sectionDropdown.append('<option value="">Please Select Section *</option>');
-                    $.each(result.data, function (index, section) {
-                        $sectionDropdown.append('<option value="' + section.id + '">' + section.name + '</option>');
-                    });
-                    $sectionDropdown.trigger('change.select2');
+                if (row.child.isShown()) {
+                    row.child.hide();
+                    tr.removeClass('shown');
+                    icon.html('+');
                 } else {
-                    toastr.error(result.msg);
+                    row.child(format(row.data())).show();
+                    tr.addClass('shown');
+                    icon.html('-');
                 }
-            },
+            });
 
-            complete: function () {
-                $('#load').hide();
-                $('#spin-request-add').hide();
-            },
+            $('#student_addmission_list tbody').on('click', '.toggle-status', function(e) {
+                e.preventDefault();
 
-            error: function (jqXHR) {
-                console.log(jqXHR.responseText);
-                $('#load').hide();
-            }
-        });
-    });
-    </script>
-    
-    <script>
-$(document).ready(function () {
+                selectedStudentId = $(this).attr('data-id');
+                let currentStatus = $(this).attr('data-status');
 
-    // ✅ File validation before upload
-    $('#file').on('change', function () {
-        let fileName = $(this).val().split('\\').pop();
-        let allowedExtensions = /(\.csv|\.xlsx|\.xls)$/i;
-        if (!allowedExtensions.exec(fileName)) {
-            alert('Invalid file type. Only CSV, XLS, XLSX allowed.');
-            $(this).val('');
-            return false;
-        }
-    });
+                selectedNewStatus = currentStatus === 'ACTIVE' ? 'INACTIVE' : 'ACTIVE';
+                selectedButton = $(this);
 
-    // ✅ Handle form submit with AJAX
-    $('#bulkUploadForm').on('submit', function (e) {
-        e.preventDefault();
+                $('#statusModalMessage').html(
+                    'Are you sure you want to change status to <b>' + selectedNewStatus + '</b>?'
+                );
 
-        let formData = new FormData(this);
+                $('#statusModal').modal('show');
+            });
 
-        // Show progress bar
-        $('.progress').show();
-        $('.progress-bar').css('width', '0%').text('0%');
+            $('#confirmStatusChange').on('click', function() {
+                if (!selectedStudentId || !selectedNewStatus || !selectedButton) {
+                    return;
+                }
 
-        $.ajax({
-            xhr: function () {
-                let xhr = new window.XMLHttpRequest();
-                xhr.upload.addEventListener("progress", function (evt) {
-                    if (evt.lengthComputable) {
-                        let percentComplete = Math.round((evt.loaded / evt.total) * 100);
-                        $('.progress-bar')
-                            .css('width', percentComplete + '%')
-                            .text(percentComplete + '%');
+                $.ajax({
+                    url: '{{ route("admin.change_student_status") }}',
+                    type: 'POST',
+                    data: {
+                        student_id: selectedStudentId,
+                        status: selectedNewStatus
+                    },
+                    success: function(response) {
+                        if (response.status) {
+                            selectedButton
+                                .attr('data-status', response.new_status)
+                                .removeClass('btn-success btn-danger')
+                                .addClass(response.new_status === 'ACTIVE' ? 'btn-success' : 'btn-danger')
+                                .text(response.new_status);
+                            toastr.success(response.msg);
+                            $('#statusModal').modal('hide');
+                        } else {
+                            toastr.error(response.msg);
+                        }
+                    },
+                    error: function(xhr) {
+                        console.log(xhr.responseText);
+                        toastr.error('Error updating status');
                     }
-                }, false);
-                return xhr;
-            },
-            url: "{{ route('admin.bulk_upload_students') }}", // Laravel route
-            type: "POST",
-            data: formData,
-            processData: false,
-            contentType: false,
+                });
+            });
 
-            success: function (response) {
-    if (response.status) {
-        toastr.success(response.message);
-
-        if ($.fn.DataTable.isDataTable('#student_addmission_list')) {
-            $('#student_addmission_list').DataTable().ajax.reload(null, false);
-        }
-
-        $('.progress').hide();
-        $('#bulkUploadForm')[0].reset();
-        $('.progress-bar').css('width', '0%').text('0%');
-        $('#uploadModal').modal('hide');
-    } else {
-        toastr.error(response.message);
-    }
-},
-
-            error: function (xhr) {
-                // ✅ Error handling
-                let msg = "Upload failed! Please check file format.";
-                if (xhr.responseJSON && xhr.responseJSON.message) {
-                    msg = xhr.responseJSON.message;
-                }
-                toastr.error(msg);
-
-                // Reset progress
-                $('.progress').hide();
-                $('.progress-bar').css('width', '0%').text('0%');
-            }
         });
-    });
-});
-</script>
+    </script>
 
 
-    
+
 </body>
 
 </html>
